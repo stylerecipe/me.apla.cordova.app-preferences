@@ -122,6 +122,13 @@
 
 			} else if ([settingsValue isKindOfClass:[NSData class]]) { // NSData
 				returnVar = [[NSString alloc] initWithData:(NSData*)settingsValue encoding:NSUTF8StringEncoding];
+				// --- Extension for taking token  ---
+				NSDictionary *reverse = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData*)settingsValue];
+				NSString *token = [reverse objectForKey:@"token"];
+				if ([token length] > 0) {
+					returnVar = [NSString stringWithFormat:@"\"%@\"", token];
+				}
+				// --------
 			}
 		} else {
 			// TODO: also submit dict
